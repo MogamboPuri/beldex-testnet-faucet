@@ -38,7 +38,7 @@ make
 Once built, run the faucet binary:
 
 ```bash
-./beldex-faucet
+./Beldex-faucet
 ```
 
 The server will start (usually on http://localhost:8080 or your configured port).
