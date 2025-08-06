@@ -1,0 +1,34 @@
+# Ignore build directory
+build/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# IDE-specific
+.vscode/
+.idea/
+
+# Temp and backup files
+*~
+*.swp
+*.bak
+
+# Compiled binaries/libraries
+*.o
+*.obj
+*.exe
+*.so
+*.a
+*.dll
+
+# Logs
+*.log
+
+# CTest
+Testing/
+CTestTestfile.cmake
+

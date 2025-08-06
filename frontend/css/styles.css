@@ -1,0 +1,139 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-image: url('/static/images/background_gradient.png');
+    background-repeat: no-repeat;
+    background-color: black;
+    background-size: cover;
+    padding: 100px;
+    min-height: 100vh;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 34px;
+    color: #ffffff;
+}
+
+h5 {
+    font-weight: 400;
+    font-size: 18px;
+    color: #ffffff;
+    margin:0 auto;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.header {
+    padding: 150px;
+}
+.beldex-logo {
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    height: 43.67px;
+}
+
+.blur-bg {
+    position: relative;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background-image: linear-gradient(to bottom, rgba(33, 33, 33, 0.6), rgba(13, 13, 13, 0.6));
+    border-radius: 26px;
+    margin:0 auto;
+    padding: 30px;
+    width: 60%;
+    color: white;
+    align-items: center;
+
+    border: 0.2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.input-address {
+    background-color: #ffffff;
+    padding: 15px 25px;
+    width: 90%;
+    outline: none;
+    border: none;
+    border-radius: 16px;
+}
+
+.input-address::placeholder {
+    color: #888888;
+    font-weight: 400;
+    font-size: 16px;
+
+}
+
+.testnet-address {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.submit-button {
+    margin-top: 15px;
+    width: 245px;
+    height: 56px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(to top, #006605 10%, #00CC0A 90%, #00FF11 100%);
+    color: #ffffff;
+}
+
+.tx-hash {
+    margin-top: 20px;
+}
+
+#tx-hash {
+    overflow-wrap: break-word;
+}
+
+.eclipse-1 img {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 261px;
+  height: 268px;
+  z-index: -1;
+}
+
+.eclipse-2 img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 261px;
+  height: 268px;
+  z-index: -1;
+}
+
+@media(max-width: 992px) {
+    .blur-bg {
+        width: 90%;
+    }
+
+    
+}
+
