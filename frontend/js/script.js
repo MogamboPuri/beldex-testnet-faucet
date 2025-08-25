@@ -5,14 +5,14 @@ window.addEventListener('pageshow', function (event) {
 
 function submit_key() {
     document.getElementById('tx-hash').textContent = "Your request is being processed. Please stand by...";
-    userInput = document.getElementById('key').value;
-    console.log(userInput);
+    address = document.getElementById('key').value;
+    console.log(address);
 
     const payload = {
-        userInput: userInput
+        address: address
     };
 
-    fetch('/transfer', {
+    fetch('https://d3fd18a2e482.ngrok-free.app/transfer', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -26,14 +26,10 @@ function submit_key() {
     .then(data => {
         console.log(data);
 
-        if(data.tx_hash && data.amount) {
+        if(data.status) {
             document.getElementById('tx-hash').innerHTML = `Transaction Successful! ${data.amount} BDX was sent. Reference: <a href="https://testnet.beldex.dev/tx/${data.tx_hash}" target="_blank" rel="noopener noreferrer">${data.tx_hash}</a>.`;
-        } else if (data.message) {
-            document.getElementById('tx-hash').innerHTML = `${data.message}. Please try again later or <a href="https://testnet.support.beldex.io" target="_blank" rel="noopener noreferrer">contact support</a>.`;
-        }else if (data.address) {
-            document.getElementById('tx-hash').textContent = `${data.address}`;
-        }else if (data.restrict) {
-            document.getElementById('tx-hash').textContent = `${data.restrict}`;
+        } else if (data['tx-error']) {
+            document.getElementById('tx-hash').innerHTML = `${data['tx-error']}. Please try again later or <a href="https://testnet.support.beldex.io" target="_blank" rel="noopener noreferrer">contact support</a>.`;
         }else if (data.error) {
             document.getElementById('tx-hash').textContent = `${data.error}`;
         } else {

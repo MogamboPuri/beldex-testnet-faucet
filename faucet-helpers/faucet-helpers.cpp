@@ -160,7 +160,8 @@ ReturnType faucetHelper::isIpRestrict(std::string clientIP) {
 
         if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
             logger << "[ERROR] Failed to prepare SQL for IP restrict" << std::endl;
-            res["error"] = "Something went wrong.";
+            res["tx-error"] = "Something went wrong.";
+            res["status"] = false;
             return {res, false, 500};
         }
 
@@ -193,12 +194,14 @@ ReturnType faucetHelper::isIpRestrict(std::string clientIP) {
 
                         std::stringstream msg;
                         msg << "Access is temporarily restricted. Kindly try again in " << h << " hour(s) and " << m << " minute(s) and " << s << " seconds(s).";
-                        res["restrict"] = msg.str();
+                        res["error"] = msg.str();
+                        res["status"] = false;
                         return {res, true, 429};
                     }
                 } catch (const std::exception& e) {
                     logger << "[EXCEPTION] Unexpected error in IP Restrict: " << e.what() << std::endl;
-                    res["error"] = "Something went wrong.";
+                    res["tx-error"] = "Something went wrong.";
+                    res["status"] = false;
                     return {res, true, 500};
                 }
             } else {
@@ -212,7 +215,8 @@ ReturnType faucetHelper::isIpRestrict(std::string clientIP) {
         }
     } catch (const std::exception& e) {
         logger << "[ERROR] Exception while checking IP restriction: " << e.what() << std::endl;
-        res["error"] = "Something went wrong.";
+        res["tx-error"] = "Something went wrong.";
+        res["status"] = false;
         return {res, true, 500};
     }
 }
@@ -227,7 +231,8 @@ ReturnType faucetHelper::isAddressRestrict(std::string tnAddr) {
 
         if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
             faucetHelper::logger << "[ERROR] Failed to prepare SQL for Address Restriction" << std::endl;
-            res["error"] = "Something went wrong.";
+            res["tx-error"] = "Something went wrong.";
+            res["status"] = false;
             return {res, true, 500};
         }
 
@@ -261,12 +266,14 @@ ReturnType faucetHelper::isAddressRestrict(std::string tnAddr) {
                         std::stringstream msg;
                         msg << "Access is temporarily restricted. Kindly try again in "
                             << h << " hour(s) and " << m << " minute(s) and " << s << " seconds(s).";
-                        res["restrict"] = msg.str();
+                        res["error"] = msg.str();
+                        res["status"] = false;
                         return {res, true, 429};
                     }
                 } catch (const std::exception& e) {
                     logger << "[EXCEPTION] Unexpected error in Address Restrict: " << e.what() << std::endl;
-                    res["error"] = "Something went wrong.";
+                    res["tx-error"] = "Something went wrong.";
+                    res["status"] = false;
                     return {res, true, 500};
                 }
             } else {
@@ -280,7 +287,8 @@ ReturnType faucetHelper::isAddressRestrict(std::string tnAddr) {
         }
     } catch (const std::exception& e) {
         logger << "[ERROR] Exception while checking address restriction: " << e.what() << std::endl;
-        res["error"] = "Something went wrong.";
+        res["tx-error"] = "Something went wrong.";
+        res["status"] = false;
         return {res, true, 500};
     }
 }
@@ -323,6 +331,7 @@ RpcReturnType faucetHelper::transferRequest(std::string tnAddr, std::string clie
                     if (res.error) {
                         logger << "[ERROR] HTTP request failed While Transfer: " << res.error.message << std::endl;
                         transRes["error"] = "Something went wrong.";
+                        transRes["status"] = false;
                         return {transRes, 500};
                     }
 
@@ -343,6 +352,7 @@ RpcReturnType faucetHelper::transferRequest(std::string tnAddr, std::string clie
 
                         if (error_code == -37) {
                             transRes["message"] = "Transaction failed.";
+                            transRes["status"] = false;
                             return {transRes, 500};
                         }
 
@@ -370,6 +380,7 @@ RpcReturnType faucetHelper::transferRequest(std::string tnAddr, std::string clie
 
                     transRes["tx_hash"] = tx_hash;
                     transRes["amount"] = 10;
+                    transRes["status"] = true;
 
                     return {transRes, 200};
                 } catch (const std::exception& e) {
@@ -380,6 +391,7 @@ RpcReturnType faucetHelper::transferRequest(std::string tnAddr, std::string clie
                     std::this_thread::sleep_for(std::chrono::seconds(10));
                 } else {
                     transRes["message"] = "Transaction failed.";
+                    transRes["status"] = false;
                     return {transRes, 500};
                 }
             }
@@ -390,9 +402,11 @@ RpcReturnType faucetHelper::transferRequest(std::string tnAddr, std::string clie
     }catch (const std::exception& e) {
         logger << "[ERROR] Exception while Transfer: " << e.what() << std::endl;
         transRes["message"] = "Transaction failed.";
+        transRes["status"] = false;
         return {transRes, 500};
     }
     transRes["message"] = "Transaction failed.";
+    transRes["status"] = false;
     return {transRes, 500};
 
 }

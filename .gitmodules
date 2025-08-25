@@ -1,12 +1,12 @@
-[submodule "external/fmt"]
-	path = external/fmt
-	url = https://github.com/fmtlib/fmt.git
-[submodule "external/nlohmann_json"]
-	path = external/nlohmann_json
-	url = https://github.com/nlohmann/json.git
 [submodule "external/cpr"]
 	path = external/cpr
 	url = https://github.com/libcpr/cpr.git
 [submodule "external/Crow"]
 	path = external/Crow
 	url = https://github.com/CrowCpp/Crow.git
+[submodule "external/fmt"]
+	path = external/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "external/nlohmann_json"]
+	path = external/nlohmann_json
+	url = https://github.com/nlohmann/json.git

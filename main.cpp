@@ -48,7 +48,7 @@ int main() {
                 if (!body)
                     return crow::response(400, "Invalid JSON");
 
-                std::string tnAddr = body["userInput"].s();
+                std::string tnAddr = body["address"].s();
 
                 // Get IP
                 std::string clientIP = helper.getClientIP(req);
@@ -79,18 +79,21 @@ int main() {
                     }
                     
                 } else {
-                    res["address"] = "The address provided is invalid. Kindly ensure that you enter a valid testnet address and try again.";
+                    res["error"] = "The address provided is invalid. Kindly ensure that you enter a valid testnet address and try again.";
+                    res["status"] = false;
                     return crow::response(400, res);
                 }
 
             } catch (const std::exception& e) {
                 faucetHelper::logger << "[EXCEPTION] Exception in /transfer handler: " << e.what() << std::endl;
-                res["error"] = "Something went wrong.";
+                res["tx-error"] = "Something went wrong.";
+                res["status"] = false;
                 return crow::response(500, res);
             
             } catch (...) {
                 faucetHelper::logger << "[EXCEPTION] Unknown exception in /transfer handler." << std::endl;
-                res["error"] = "Something went wrong.";
+                res["tx-error"] = "Something went wrong.";
+                res["status"] = false;
                 return crow::response(500, res);
             }
         });
